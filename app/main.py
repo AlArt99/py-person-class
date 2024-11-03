@@ -1,4 +1,5 @@
 class Person:
+
     people = {}
 
     def __init__(self, name: str, age: int) -> None:
@@ -9,28 +10,34 @@ class Person:
 
 
 def create_person_list(people: list) -> list:
+
     instances = []
 
-    # First, create all Person instances and add them to Person.people
     for person in people:
         name = person["name"]
         age = person["age"]
 
-        # Create a Person instance and add it to the list
         person_instance = Person(name, age)
         instances.append(person_instance)
 
-    # Now set the wife/husband attributes if they are not None
     for person in people:
         name = person["name"]
-        spouse_key = "wife" if "wife" in person else "husband"
 
-        if person[spouse_key] is not None:
-            # Retrieve the person instance and their spouse instance
-            person_instance = Person.people[name]
-            spouse_instance = Person.people[person[spouse_key]]
+        if "wife" in person or "husband" in person:
 
-            # Set the attribute (either wife or husband)
-            setattr(person_instance, spouse_key, spouse_instance)
+            spouse_key = "wife" if "wife" in person else "husband"
+            spouse_name = person[spouse_key]
+
+            if spouse_name is not None:
+                if spouse_name in Person.people:
+
+                    person_instance = Person.people[name]
+                    spouse_instance = Person.people[spouse_name]
+
+                    setattr(person_instance, spouse_key, spouse_instance)
+                else:
+                    print(f"Warning: Spouse "
+                          f"\"{spouse_name}\" for "
+                          f"\"{name}\" not found.")
 
     return instances
