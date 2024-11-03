@@ -32,8 +32,8 @@ def create_person_list(people: list) -> list:
                     setattr(person_instance, spouse_key, spouse_instance)
                 else:
                     print(
-                        f"Warning: Spouse \"{spouse_name}\" for \"{name}\" "
-                        "not found."
+                        f'Warning: Spouse "{spouse_name}" for "{name}" '
+                        f'not found.'
                     )
 
     return instances
